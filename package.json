@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/adj-dev/term-guess#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
     "inquirer": "^6.3.1"
   }
 }

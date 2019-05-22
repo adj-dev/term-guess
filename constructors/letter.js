@@ -9,11 +9,11 @@ function Letter(char) {
   this.discovered = false;
 
   this.checkGuess = function (char) {
-    if (char === this.char) {
+    if (char === this.char && char !== ' ') {
       this.discovered = true;
-      return;
+      return true;
     }
-    return;
+    return false;
   }
 
   this.display = function () {

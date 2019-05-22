@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const inquirer = require('inquirer');
 const Word = require('./constructors/word.js');
 
@@ -15,6 +16,7 @@ const library = [
 ]
 
 
+
 /**
  *  Removes an item from the library array and returns that item as a string.
  */
@@ -23,22 +25,27 @@ const getTerm = () => library.splice(Math.floor(Math.random() * library.length),
 
 
 let round = 1;
-let guesses;
+let guesses = 10;
+let correctGuesses = 0;
+let incorrectGuesses = 0;
+let hardMode = false;
 
-/**
- * Initiates a new round
- * 
- * @param {*} term Random word from `library` array
- */
+
+
+// Initiates a new round
 function newRound() {
   // If there are no words left end the game
   if (library.length === 0) {
-    return endGame();
+    return endGame(true);
   }
 
-  guesses = 10;
+  // Reset the guesses count if in normal mode
+  if (!hardMode) {
+    guesses = 10;
+  }
 
-  console.log(`\n\nRound ${round}`);
+
+  console.log(chalk`\n\n{bold.yellowBright Round ${round}}`);
 
   let word = new Word();
   let term = getTerm();
@@ -47,7 +54,7 @@ function newRound() {
   promptUser(word);
 }
 
-
+// Prompts the user for a letter
 function promptUser(word) {
   inquirer
     .prompt([
@@ -57,13 +64,13 @@ function promptUser(word) {
         message: 'Guess a letter: ',
         transformer: function (input) {
           if (input.length > 1) {
-            return 'please only enter ONE character at a time.';
+            return chalk`{bold.red please only enter ONE character at a time.}`;
           }
           if (parseInt(input)) {
-            return "I highly doubt there's a number in there, use a letter."
+            return chalk`{bold.red I highly doubt there's a number in there, use a letter.}`
           }
           if (input === ' ') {
-            return "Hitting the space bar definitely won't solve anything."
+            return chalk`{bold.red Hitting the space bar definitely won't solve anything.}`
           }
           return input;
         }
@@ -71,11 +78,33 @@ function promptUser(word) {
     ]).then(guess => {
       let { letter } = guess;
 
-      word.guess(letter);
+      if (letter.length !== 1 || !letter || parseInt(letter)) {
+        word.display();
+        promptUser(word);
+        return;
+      }
+
+      // Send the guessed letter into guess function. A callback function returns a true or false depending on
+      // whether or not the letter was guessed correctly.
+      word.guess(letter, correct => {
+        if (!correct) {
+          guesses -= 1;
+          incorrectGuesses++;
+          return console.log(chalk`\n{bold.red Incorrect}\n{bold Guesses left: ${guesses}}\n`);
+        }
+        correctGuesses++;
+        return console.log(chalk`\n{bold.green Correct!}`)
+      });
+
+
       word.display();
 
+      if (guesses === 0) {
+        endGame(false);
+        return;
+      }
+
       if (word.isSolved()) {
-        console.log('Nice Work!');
         round += 1;
         newRound();
         return;
@@ -87,10 +116,35 @@ function promptUser(word) {
     });
 }
 
+// Ends the game
+function endGame(isWon) {
+  if (isWon) {
+    console.log(chalk`\n\n{bold.green YOU WIN}\n`);
+  } else {
+    console.log(chalk`\n\n{bold.red YOU LOSE}\n`);
+  }
+  let accuracy = Math.round((correctGuesses / (correctGuesses + incorrectGuesses)) * 100)
+  console.log(chalk`{bold correct guesses: ${correctGuesses}\nincorrect guesses: ${incorrectGuesses}\naccuracy: ${accuracy}%}\n\n`);
 
-function endGame() {
-  console.log("\n\nCongratulations... you've won!\n\n")
 }
 
 
-newRound();
+
+// Prompt for hard mode OR normal mode
+inquirer
+  .prompt([
+    {
+      type: 'list',
+      name: 'mode',
+      choices: ['normal', 'difficult'],
+      message: chalk`{bold.yellowBright Welcome to Term Guess}`
+    }
+  ]).then(answer => {
+    let { mode } = answer;
+    if (mode === 'difficult') {
+      hardMode = true;
+    }
+    newRound()
+  }).catch(err => {
+    console.log(err)
+  });

@@ -13,12 +13,19 @@ function Word() {
     if (this.letters.length !== 0) {
       this.word = '';
       this.letters.forEach(char => this.word += char.display());
-      console.log(`\n${this.word}\n`);
+      console.log(`\n${this.word}`);
     }
   }
 
-  this.guess = function (letter) {
-    this.letters.forEach(char => char.checkGuess(letter));
+  this.guess = function (letter, callback) {
+    let correct = false;
+    this.letters.forEach(char => {
+      let isCorrect = char.checkGuess(letter)
+      if (isCorrect) {
+        correct = true;
+      }
+    });
+    callback(correct);
   }
 
   // Iterates through each Letter and returns true if all are guessed
