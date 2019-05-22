@@ -8,19 +8,46 @@ const Word = require('./constructors/word.js');
 const library = [
   'cruising for a bruising',
   'hit the road jack',
-  'fairweather friend',
+  'fair weather friend',
   'inclement weather',
   'jazz',
   'funk',
-  'pedal to the metal'
+  'pedal to the metal',
+  'shimmy',
+  'yard',
+  'tool',
+  'crazy',
+  'funny bone',
+  'insidious',
+  'challenge',
+  'complete',
+  'rare',
+  'xylophone',
+  'climb',
+  'dance',
+  'billboard',
+  'ambiguous',
+  'try',
+  'ant',
+  'win',
+  'fin',
+  'gin',
+  'tin',
+  'sin'
 ]
+
+function createWordList() {
+  for (let i = 0; i < 5; i++) {
+    wordList.push(getTerm(library));
+  }
+}
 
 
 
 /**
  *  Removes an item from the library array and returns that item as a string.
  */
-const getTerm = () => library.splice(Math.floor(Math.random() * library.length), 1).toString();
+const getTerm = (arr) => arr.splice(Math.floor(Math.random() * arr.length), 1).toString();
 
 
 
@@ -29,6 +56,7 @@ let guesses = 10;
 let correctGuesses = 0;
 let incorrectGuesses = 0;
 let hardMode = false;
+let wordList = [];
 
 
 
@@ -48,7 +76,7 @@ function newRound() {
   console.log(chalk`\n\n{bold.yellowBright Round ${round}}`);
 
   let word = new Word();
-  let term = getTerm();
+  let term = getTerm(wordList);
   word.anonymize(term);
   word.display();
   promptUser(word);
@@ -128,6 +156,9 @@ function endGame(isWon) {
 
 }
 
+
+// Generate the random list of words
+createWordList();
 
 
 // Prompt for hard mode OR normal mode
