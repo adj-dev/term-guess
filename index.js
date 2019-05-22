@@ -54,7 +54,19 @@ function promptUser(word) {
       {
         type: 'input',
         name: 'letter',
-        message: 'Guess a letter: '
+        message: 'Guess a letter: ',
+        transformer: function (input) {
+          if (input.length > 1) {
+            return 'please only enter ONE character at a time.';
+          }
+          if (parseInt(input)) {
+            return "I highly doubt there's a number in there, use a letter."
+          }
+          if (input === ' ') {
+            return "Hitting the space bar definitely won't solve anything."
+          }
+          return input;
+        }
       }
     ]).then(guess => {
       let { letter } = guess;
