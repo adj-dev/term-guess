@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/adj-dev/term-guess/issues"
   },
-  "homepage": "https://github.com/adj-dev/term-guess#readme"
+  "homepage": "https://github.com/adj-dev/term-guess#readme",
+  "dependencies": {
+    "inquirer": "^6.3.1"
+  }
 }
