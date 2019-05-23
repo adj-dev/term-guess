@@ -18,6 +18,6 @@ __Term Guess__ will not take in more than 1 character at a time. It will notify 
   3. A special character is typed
   4. A space is typed
 
-If you submit an input under any of these circumstances __Term Guess__ will ignore your input and you're score will not change. 
+If you submit an input under any of these circumstances __Term Guess__ will ignore your input and you're score will not change. __Term Guess__ will also notify you if a letter has already been guessed. 
 
 
