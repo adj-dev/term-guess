@@ -43,7 +43,9 @@ const library = [
   'impressive',
   'the bees knees',
   'new world order',
-  'supercalifragilisticexpialidocious'
+  'supercalifragilisticexpialidocious',
+  'vehicle',
+  'summer'
 ]
 
 
@@ -72,6 +74,20 @@ let correctGuesses = 0;
 let incorrectGuesses = 0;
 let hardMode = false;
 let wordList = [];
+let guessedLetters = [];
+
+
+
+// Checks if a letter has already been guessed
+function isRepeat(letter) {
+  let isGuessed = false;
+  guessedLetters.forEach(char => {
+    if (char === letter) {
+      isGuessed = true;
+    }
+  });
+  return isGuessed;
+}
 
 
 
@@ -104,7 +120,7 @@ function promptUser(word) {
     .prompt([
       {
         type: 'input',
-        name: 'letter',
+        name: 'letterRAW',
         message: 'Guess a letter: ',
         transformer: function (input) {
           if (input.length > 1) {
@@ -123,13 +139,28 @@ function promptUser(word) {
         }
       }
     ]).then(guess => {
-      let { letter } = guess;
+      let { letterRAW } = guess;
 
-      if (letter.length !== 1 || !letter || letter.search(/([a-z])/i) === -1) {
+      if (letterRAW.length !== 1 || !letterRAW || letterRAW.search(/([a-z])/i) === -1) {
         word.display();
         promptUser(word);
         return;
       }
+
+      // make letter lower case
+      let letter = letterRAW.toLowerCase();
+
+      // Check if letter is already guessed
+      if (isRepeat(letter)) {
+        console.log(chalk`\n{bold.red "${letter}" has already been guessed}`)
+        word.display();
+        promptUser(word);
+        return;
+      } else {
+        // If not a repeat add it to the list of guessed letters
+        guessedLetters.push(letter);
+      }
+
 
       // Send the guessed letter into guess function. A callback function returns a true or false depending on
       // whether or not the letter was guessed correctly.
