@@ -1,17 +1,15 @@
 {
   "name": "term-guess",
   "version": "1.0.0",
-  "description": "It's a word guessing game that runs in Terminal.",
+  "description": "It's a word and phrase guessing game that runs in Terminal.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adj-dev/term-guess.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andrew Johnson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/adj-dev/term-guess/issues"
