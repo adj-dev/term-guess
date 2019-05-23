@@ -33,9 +33,23 @@ const library = [
   'fin',
   'gin',
   'tin',
-  'sin'
+  'sin',
+  'sentient being',
+  'alien',
+  'stupendous',
+  'random',
+  'colour',
+  'funny',
+  'impressive',
+  'the bees knees',
+  'new world order',
+  'supercalifragilisticexpialidocious'
 ]
 
+
+/**
+ * Pushes to an array 5 randomly selected terms from library array
+ */
 function createWordList() {
   for (let i = 0; i < 5; i++) {
     wordList.push(getTerm(library));
@@ -51,6 +65,7 @@ const getTerm = (arr) => arr.splice(Math.floor(Math.random() * arr.length), 1).t
 
 
 
+// Define global variable
 let round = 1;
 let guesses = 10;
 let correctGuesses = 0;
@@ -63,7 +78,7 @@ let wordList = [];
 // Initiates a new round
 function newRound() {
   // If there are no words left end the game
-  if (library.length === 0) {
+  if (wordList.length === 0) {
     return endGame(true);
   }
 
@@ -95,10 +110,13 @@ function promptUser(word) {
             return chalk`{bold.red please only enter ONE character at a time.}`;
           }
           if (parseInt(input)) {
-            return chalk`{bold.red I highly doubt there's a number in there, use a letter.}`
+            return chalk`{bold.red I highly doubt there's a number in there, use a letter.}`;
           }
           if (input === ' ') {
-            return chalk`{bold.red Hitting the space bar definitely won't solve anything.}`
+            return chalk`{bold.red Hitting the space bar definitely won't solve anything.}`;
+          }
+          if (input.length === 1 && input.search(/([a-z])/i) === -1) {
+            return chalk`{bold.red No special characters allowed.}`
           }
           return input;
         }
@@ -106,7 +124,7 @@ function promptUser(word) {
     ]).then(guess => {
       let { letter } = guess;
 
-      if (letter.length !== 1 || !letter || parseInt(letter)) {
+      if (letter.length !== 1 || !letter || letter.search(/([a-z])/i) === -1) {
         word.display();
         promptUser(word);
         return;
