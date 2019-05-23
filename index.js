@@ -87,9 +87,10 @@ function newRound() {
     guesses = 10;
   }
 
-
+  // Display the which round it is
   console.log(chalk`\n\n{bold.yellowBright Round ${round}}`);
 
+  // Set up constructor per round
   let word = new Word();
   let term = getTerm(wordList);
   word.anonymize(term);
@@ -145,11 +146,13 @@ function promptUser(word) {
 
       word.display();
 
+      // If out of guesses, lose game
       if (guesses === 0) {
         endGame(false);
         return;
       }
 
+      // start a new round if the word has been completely solved
       if (word.isSolved()) {
         round += 1;
         newRound();
