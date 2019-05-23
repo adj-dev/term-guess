@@ -104,7 +104,7 @@ function newRound() {
   }
 
   // Display the which round it is
-  console.log(chalk`\n\n{bold.yellowBright Round ${round}}`);
+  console.log(chalk`\n\n{bold.yellowBright Word ${round}}`);
 
   // Set up constructor per round
   let word = new Word();
@@ -205,7 +205,6 @@ function endGame(isWon) {
   }
   let accuracy = Math.round((correctGuesses / (correctGuesses + incorrectGuesses)) * 100)
   console.log(chalk`{bold correct guesses: ${correctGuesses}\nincorrect guesses: ${incorrectGuesses}\naccuracy: ${accuracy}%}\n\n`);
-
 }
 
 
