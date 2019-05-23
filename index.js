@@ -103,6 +103,9 @@ function newRound() {
     guesses = 10;
   }
 
+  // Reset the guessed letters
+  guessedLetters = [];
+
   // Display the which round it is
   console.log(chalk`\n\n{bold.yellowBright Word ${round}}`);
 

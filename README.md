@@ -7,10 +7,14 @@ In order to play __Term Guess__ it must first be cloned onto your local machine.
 
 ## Gameplay
 
-To initiate, run `node index.js` and select a game mode: __normal__ or __difficult__. In the normal mode you will be allowed 10 incorrect guesses per _word_. In the difficult mode you will be allowed 10 incorrect guesses per _round_. A round consists of 5 words/phrases. If you run out of allowable incorrect guesses before the round is over, you will lose the game. After a round is either won or lost the following stats will be displayed for the user: total correct guesses, total incorrect guesses, and accuracy percentage. 
+![gameplay-gif](resources/gameplay.gif)
+
+To initiate, run `node index.js` and select a game mode: __normal__ or __difficult__. In the normal mode you will be allowed 10 incorrect guesses per _word_. In the difficult mode you will be allowed 10 incorrect guesses per _round_. A round consists of 5 words/phrases which are randomly selected from a library. If you run out of allowable incorrect guesses before the round is over, you will lose the game. After a round is either won or lost the following stats will be displayed for the user: total correct guesses, total incorrect guesses, and accuracy percentage. 
 
 
 ## Input Validation
+
+![validation-gif](resources/validation.gif)
 
 __Term Guess__ will not take in more than 1 character at a time. It will notify you of incorrect input in the following circumstances:
   1. More than 1 character
@@ -19,5 +23,4 @@ __Term Guess__ will not take in more than 1 character at a time. It will notify 
   4. A space is typed
 
 If you submit an input under any of these circumstances __Term Guess__ will ignore your input and you're score will not change. __Term Guess__ will also notify you if a letter has already been guessed. 
-
 
